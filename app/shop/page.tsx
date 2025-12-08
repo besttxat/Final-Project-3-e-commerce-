@@ -6,8 +6,18 @@ import Filters from "../components/Filters";
 import { ChevronRight } from "lucide-react";
 import { useSearchParams } from 'next/navigation';
 
+interface Product {
+    id: number;
+    title: string;
+    price: string | number;
+    rating: number;
+    imageUrl: string;
+    originalPrice?: string | number;
+    discount?: number;
+}
+
 function ShopContent() {
-    const [products, setProducts] = useState<any[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
     const searchParams = useSearchParams();
 
     useEffect(() => {

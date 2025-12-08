@@ -5,12 +5,24 @@ import Image from "next/image";
 import { ChevronRight, Trash2, ArrowRight, Minus, Plus, Tag } from "lucide-react";
 import Button from "../components/ui/Button";
 
+interface CartItem {
+    id: number;
+    itemId: number;
+    productId: number;
+    title: string;
+    price: string | number;
+    quantity: number;
+    imageUrl: string;
+    color?: string;
+    size?: string;
+}
+
 export default function Cart() {
-    const [cartItems, setCartItems] = useState<any[]>([]);
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const fetchCart = async () => {
+    const fetchCart = React.useCallback(async () => {
         try {
             const res = await fetch('/api/cart');
             if (res.status === 401) {
@@ -26,11 +38,11 @@ export default function Cart() {
             console.error(err);
             setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchCart();
-    }, []);
+    }, [fetchCart]);
 
     const updateQuantity = async (itemId: number, productId: number, currentQuantity: number, delta: number) => {
         // Prevent quantity < 1
@@ -42,27 +54,18 @@ export default function Cart() {
         // Call API
         try {
             // Re-using POST to add/subtract relative quantity
-            // Make sure the API handles this correctly (it adds the value)
             await fetch('/api/cart', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     productId,
                     quantity: delta,
-                    // color/size needed to match item? 
-                    // Wait, the API matches by (cart_id, product_id, color, size).
-                    // In the list we have itemId (PK of cart_item).
-                    // It's safer to have an update endpoint by ID, OR we need to pass color/size back.
-                    // My previous API design for POST requires color/size to match.
-                    // Let's rely on Passing them back or simply use the itemId to update if we had a specific update endpoint.
-                    // Since I didn't create a PATCH /api/cart/[id], I will use the POST logic but I need to pass color/size.
                     color: cartItems.find(i => i.itemId === itemId)?.color,
                     size: cartItems.find(i => i.itemId === itemId)?.size
                 })
             });
         } catch (err) {
             console.error(err);
-            // Revert changes if needed (omitted for brevity)
         }
     };
 

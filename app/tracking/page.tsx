@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import Button from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
-import { Search, Truck, MapPin, Package, Star } from "lucide-react";
+import { Truck, MapPin, Package, Star } from "lucide-react";
 
 export default function TrackingPage() {
     // Hardcoded to Thailand Post
     const carrier = "THAIPOST";
     const [trackingNumber, setTrackingNumber] = useState("");
-    const [result, setResult] = useState<any>(null);
+    const [result, setResult] = useState<any>(null); // Keeping simple any for complex API response unless detailed typing needed
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 

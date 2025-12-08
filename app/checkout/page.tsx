@@ -19,6 +19,7 @@ export default function CheckoutPage() {
     const [expiryYear, setExpiryYear] = useState("");
     const [cvc, setCvc] = useState("");
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [userId, setUserId] = useState<number | null>(null);
 
     useEffect(() => {
@@ -36,7 +37,7 @@ export default function CheckoutPage() {
             if (cartRes.ok) {
                 const data = await cartRes.json();
                 if (data.items) {
-                    const sub = data.items.reduce((acc: number, item: any) => acc + (Number(item.price) * item.quantity), 0);
+                    const sub = data.items.reduce((acc: number, item: { price: string | number, quantity: number }) => acc + (Number(item.price) * item.quantity), 0);
                     const discount = sub * 0.2;
                     const total = sub - discount + 15;
                     setCartTotal(total);
@@ -92,7 +93,7 @@ export default function CheckoutPage() {
 
     const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
 
-    const processPayment = async (payload: any) => {
+    const processPayment = async (payload: { token?: string, source?: string, amount: number }) => {
         try {
             const res = await fetch('/api/checkout', {
                 method: 'POST',

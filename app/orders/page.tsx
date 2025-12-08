@@ -6,8 +6,28 @@ import { useRouter } from "next/navigation";
 import { ChevronRight, Package, Truck, ExternalLink } from "lucide-react";
 import Button from "../components/ui/Button";
 
+interface OrderItem {
+    id: number;
+    title: string;
+    imageUrl: string;
+    size: string;
+    color: string;
+    quantity: number;
+    price: string | number;
+}
+
+interface Order {
+    id: number;
+    status: string;
+    amount: string | number;
+    createdAt: string;
+    tracking_number?: string;
+    carrier?: string;
+    items: OrderItem[];
+}
+
 export default function OrdersPage() {
-    const [orders, setOrders] = useState<any[]>([]);
+    const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
@@ -95,7 +115,7 @@ export default function OrdersPage() {
 
                             {/* Order Items */}
                             <div className="flex flex-col gap-4">
-                                {order.items.map((item: any) => (
+                                {order.items.map((item) => (
                                     <div key={item.id} className="flex gap-4 items-center">
                                         <div className="w-16 h-16 bg-shop-gray-100 rounded-md relative overflow-hidden flex-shrink-0">
                                             {item.imageUrl && <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />}

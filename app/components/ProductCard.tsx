@@ -1,15 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Star, StarHalf } from "lucide-react";
+import { Star } from "lucide-react";
 
 interface ProductCardProps {
-    id: string;
+    id: string | number;
     title: string;
-    price: number;
+    price: string | number;
     rating: number;
     imageUrl: string;
     discount?: number;
-    originalPrice?: number;
+    originalPrice?: string | number;
 }
 
 const ProductCard = ({ id, title, price, rating, imageUrl, discount, originalPrice }: ProductCardProps) => {
