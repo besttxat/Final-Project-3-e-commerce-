@@ -24,7 +24,7 @@ const Footer = () => {
 
             <div className="container pt-[50px] grid grid-cols-2 md:grid-cols-5 gap-10 pb-10 border-b border-black/10">
                 <div className="col-span-2 md:col-span-1.5 pr-5">
-                    <h2 className="text-[33px] font-black mb-6 font-sans">SHOP.CO</h2>
+                    <h2 className="text-[33px] font-black mb-6 font-sans">BA.sic</h2>
                     <p className="text-shop-gray-500 text-sm leading-[22px] mb-9">
                         We have clothes that suits your style and which you're proud to wear. From women to men.
                     </p>

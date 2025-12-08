@@ -53,7 +53,7 @@ const Navbar = () => {
                         {/* <Menu /> */}
                     </div>
                     <Link href="/" className="text-[32px] font-black font-sans tracking-tight">
-                        SHOP.CO
+                        BA.sic
                     </Link>
                 </div>
 
