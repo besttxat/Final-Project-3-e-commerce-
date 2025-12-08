@@ -32,7 +32,7 @@ export async function POST(request: Request) {
             secure: process.env.NODE_ENV === 'production',
             maxAge: 60 * 60 * 24, // 24 hours
             path: '/',
-            sameSite: 'strict',
+            sameSite: 'lax',
         });
 
         const { password: _, ...userWithoutPassword } = user;

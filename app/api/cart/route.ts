@@ -9,7 +9,7 @@ export async function GET() {
         if (!session) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
 
         // Get active cart
-        const [cartRows]: any = await pool.execute('SELECT id FROM carts WHERE user_id = ? AND status = "active"', [session.id]);
+        const [cartRows]: any = await pool.execute('SELECT id FROM carts WHERE user_id = ? AND status = \'active\'', [session.id]);
 
         if (cartRows.length === 0) {
             return NextResponse.json({ items: [] });
@@ -50,11 +50,11 @@ export async function POST(request: Request) {
         const { productId, quantity, color, size } = await request.json();
 
         // Check/Create Cart
-        let [cartRows]: any = await pool.execute('SELECT id FROM carts WHERE user_id = ? AND status = "active"', [session.id]);
+        let [cartRows]: any = await pool.execute('SELECT id FROM carts WHERE user_id = ? AND status = \'active\'', [session.id]);
         let cartId;
 
         if (cartRows.length === 0) {
-            const [result]: any = await pool.execute('INSERT INTO carts (user_id, status) VALUES (?, "active")', [session.id]);
+            const [result]: any = await pool.execute('INSERT INTO carts (user_id, status) VALUES (?, \'active\')', [session.id]);
             cartId = result.insertId;
         } else {
             cartId = cartRows[0].id;

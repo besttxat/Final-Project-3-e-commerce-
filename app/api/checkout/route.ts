@@ -31,7 +31,7 @@ export async function POST(request: Request) {
         // Let's being more secure: Fetch cart items.
 
         const [cartRows]: any = await pool.execute(
-            'SELECT * FROM carts WHERE user_id = ? AND status = "active"',
+            'SELECT * FROM carts WHERE user_id = ? AND status = \'active\'',
             [userId]
         );
 
@@ -112,7 +112,7 @@ export async function POST(request: Request) {
         // Usually we mark as completed to keep history if using `carts` table for history, 
         // but here we have `orders` table. So we can just delete items or update status.
         // Let's update status to 'completed' and create a new fresh cart next time.
-        await pool.execute('UPDATE carts SET status = "completed" WHERE id = ?', [cartId]);
+        await pool.execute('UPDATE carts SET status = \'completed\' WHERE id = ?', [cartId]);
 
         return NextResponse.json({ success: true, orderId, charge });
 
